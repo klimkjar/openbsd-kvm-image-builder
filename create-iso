@@ -13,7 +13,7 @@ IFS=$'\n\t'
 
 AUTO_INST="auto_install.conf"
 RAMDISK=/mnt/ramdisk
-RDSETROOT=/usr/local/bin/rdsetroot
+RDSETROOT=/usr/sbin/rdsetroot
 
 REL=
 RELEASE=
@@ -110,43 +110,35 @@ if [[ -z ${RELEASE} ]]; then
 fi
 
 if [[ -z ${MIRROR} ]]; then
-  echo "Error: missing mirror url (-m)"
-  exit 1
+  MIRROR=ftp.eu.openbsd.org
 fi
 
 if [[ -z ${MIRROR_PATH} ]]; then
-  echo "Error: missing mirror path (-p)"
-  exit 1
+  MIRROR_PATH=/pub/OpenBSD
 fi
 
 if [[ -z ${ISO} ]]; then
-  echo "Error: missing ISO (-i) value"
-  exit 1
+  ISO=install${REL}.iso
 fi
 
-if [[ -z ${ISO} ]]; then
-  echo "Error: missing ISO checksum (-c) value"
-  exit 1
+if [[ -z ${ISO_CHECKSUM} ]]; then
+  ISO_CHECKSUM=SHA256
 fi
 
 if [[ -z ${ISO_DIR} ]]; then
-  echo "Error: missing ISO directory (-d) value"
-  exit 1
+  ISO_DIR=/data/openbsd-${RELEASE}-iso
 fi
 
 if [[ -z ${ISO_MOUNT} ]]; then
-  echo "Error: missing mount point directory (-M) value"
-  exit 1
+  ISO_MOUNT=/mnt/openbsd-${RELEASE}-iso
 fi
 
 if [[ -z ${ISO_LAYOUT} ]]; then
-  echo "Error: missing DVD layout directory (-l) value"
-  exit 1
+  ISO_LAYOUT=/data/openbsd-custom-${RELEASE}
 fi
 
 if [[ -z ${ISO_FILENAME} ]]; then
-  echo "Error: missing custom ISO file name (-f) value"
-  exit 1
+  ISO_FILENAME=openbsd-${RELEASE}-custom.iso
 fi
 
 # Clean up ISO file if download is interrupted
