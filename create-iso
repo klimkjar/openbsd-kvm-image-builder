@@ -247,7 +247,7 @@ create_layout() {
     (
       echo "===> Building $RDSETROOT"
       cd /usr/src/distrib/common
-      cc -o $RDSETROOT elf32.c elf64.c elfrdsetroot.c
+      cc -I /usr/src/include -o $RDSETROOT elf32.c elf64.c elfrdsetroot.c
     )
   fi
 
