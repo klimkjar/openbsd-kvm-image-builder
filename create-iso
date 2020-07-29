@@ -236,11 +236,12 @@ create_layout() {
     if [[ ! -d /usr/src/distrib/common ]]; then
       (
         echo "===> Downloading src.tar.gz from $MIRROR..."
-        curl -sS -o /tmp/src.tar.gz https://${MIRROR}${MIRROR_PATH}/${RELEASE}/src.tar.gz
+        mkdir -p /data/tmp
+        curl -sS -o /data/tmp/src.tar.gz https://${MIRROR}${MIRROR_PATH}/${RELEASE}/src.tar.gz
         echo "===> Installing source tree..."
         cd /usr/src
-        tar xzf /tmp/src.tar.gz
-        rm -rf /tmp/src.tar.gz
+        tar xzf /data/tmp/src.tar.gz
+        rm -rf /data/tmp/src.tar.gz
       )
     fi
 
