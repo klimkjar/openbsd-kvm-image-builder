@@ -14,8 +14,8 @@ IFS=$'\n\t'
 AUTO_INST="auto_install.conf"
 RAMDISK=/mnt/ramdisk
 RDSETROOT=/usr/local/bin/rdsetroot
-TRITON_DIST_FILE="site61.tgz"
 
+REL=
 RELEASE=
 MIRROR=
 MIRROR_PATH=
@@ -64,6 +64,7 @@ do
       ;;
     r)
       RELEASE=${OPTARG}
+      REL=${RELEASE//.}
       ;;
     m)
       MIRROR=${OPTARG%/}
@@ -95,6 +96,8 @@ do
       ;;
   esac
 done
+
+TRITON_DIST_FILE="site${REL}.tgz"
 
 if [[ "$#" -eq 0 ]]; then
   usage
@@ -166,7 +169,7 @@ fetch_iso() {
 
     echo "==> Verifying $ISO with ${ISO_CHECKSUM}"
 
-    (cd $ISO_DIR && signify -C -p /etc/signify/openbsd-61-base.pub -x ${ISO_CHECKSUM}.sig ${ISO})
+    (cd $ISO_DIR && signify -C -p /etc/signify/openbsd-${REL}-base.pub -x ${ISO_CHECKSUM}.sig ${ISO})
     if [[ $?  != 0 ]]; then
         exit 1
     fi
@@ -180,7 +183,7 @@ fetch_iso() {
 
       echo "==> Verifying $ISO with ${ISO_CHECKSUM}"
 
-      (cd $ISO_DIR && signify -C -p /etc/signify/openbsd-61-base.pub -x ${ISO_CHECKSUM}.sig ${ISO})
+      (cd $ISO_DIR && signify -C -p /etc/signify/openbsd-${REL}-base.pub -x ${ISO_CHECKSUM}.sig ${ISO})
       if [[ $?  != 0 ]]; then
           exit 1
       fi
