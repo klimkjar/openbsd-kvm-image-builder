@@ -137,7 +137,7 @@ cat << MANIFEST > $BLANK_MANIFEST
   "nics": [
     {
       "interface": "net0",
-      "nic_tag": "external",
+      "nic_tag": "vms",
       "ip": "$IP",
       "primary": "true",
       "netmask": "$NETMASK",
@@ -224,7 +224,7 @@ snapshot() {
 
 create_file() {
   echo "==> Creating image file..."
-  zfs send zones/${VM_UUID}-disk0@dataset-${BUILD_DATE} | gzip -9 > ${IMAGE_NAME}-${BUILD_DATE}.zfs.gz
+  zfs send zones/${VM_UUID}-disk0@dataset-${BUILD_DATE} | gzip -0 > ${IMAGE_NAME}-${BUILD_DATE}.zfs.gz
   echo "==> done!"
   echo "==>"
 }
