@@ -233,7 +233,7 @@ create_layout() {
   fi
 
   if [[ ! -e $RDSETROOT ]]; then
-    if [[ ! -d /usr/src/distrib/common ]]; then
+    if [[ ! -d /usr/src/usr.sbin ]]; then
       (
         echo "===> Downloading src.tar.gz from $MIRROR..."
         mkdir -p /data/tmp
@@ -247,8 +247,13 @@ create_layout() {
 
     (
       echo "===> Building $RDSETROOT"
-      cd /usr/src/distrib/common
-      cc -I /usr/src/include -o $RDSETROOT elf32.c elf64.c elfrdsetroot.c
+      if [[ -e /usr/src/distrib/common/elfrdsetroot.c ]]; then
+        cd /usr/src/distrib/common
+        cc -I /usr/src/include -o $RDSETROOT elf32.c elf64.c elfrdsetroot.c
+      else
+        cd /usr/src/usr.sbin/rdsetroot
+        cc -I /usr/src/include -o $RDSETROOT elf32.c elf64.c rdsetroot.c
+      fi
     )
   fi
 
